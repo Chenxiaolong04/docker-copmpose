@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hello from Backend</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+        }
+        input, button {
+          font-size: 16px;
+          padding: 8px;
+          margin: 5px 0;
+        }
+        #result {
+          margin-top: 20px;
+          font-size: 24px;
+          font-weight: bold;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<input type="text" id="nameInput" placeholder="Scrivi il tuo nome..." />
+<button id="sendBtn">Invia</button>
+<div id="result">Hello, World!</div>
+
+
+<script>
+    $("#sendBtn").click(function () {
+      const name = $("#nameInput").val().trim(); // <-- QUI recuperi il nome scritto nell'input
+
+      if (name === "") {
+        $("#result").text("Hello, World!");
+        return;
+      }
+
+      const url = "http://localhost:8081/hello/greeting?name=" + encodeURIComponent(name); // <-- QUI lo usi
+
+      $.get(url)
+        .done(function (data) {
+          $("#result").text(data);
+        })
+        .fail(function () {
+          $("#result").text("Errore: impossibile raggiungere il backend");
+        });
+    });
+</script>
+
+
+</body>
+</html>
